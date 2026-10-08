@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ATP Tour 2026 - Calendário e Ingressos</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .hero-gradient { background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0369a1 100%); }
+        .tournament-card:hover { transform: translateY(-4px); transition: all 0.3s ease; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col">
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-50 bg-slate-900/90 backdrop-blur-md border-b border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-3 cursor-pointer" onclick="switchTab('home')">
+                <div class="bg-blue-600 text-white p-2.5 rounded-xl font-extrabold text-xl tracking-wider shadow-lg shadow-blue-600/30">
+                    <i class="fa-solid fa-trophy"></i> ATP 2026
+                </div>
+                <div>
+                    <span class="text-lg font-bold block leading-none">ATP TOUR</span>
+                    <span class="text-xs text-blue-400 font-semibold tracking-widest">OFFICIAL CALENDAR</span>
+                </div>
+            </div>
+            <nav class="hidden md:flex items-center space-x-6 text-sm font-medium">
+                <button onclick="switchTab('home')" class="nav-btn text-blue-400 hover:text-blue-300 transition" data-target="home">Início</button>
+                <button onclick="switchTab('calendar')" class="nav-btn text-slate-300 hover:text-blue-300 transition" data-target="calendar">Calendário & Torneios</button>
+                <button onclick="switchTab('rankings')" class="nav-btn text-slate-300 hover:text-blue-300 transition" data-target="rankings">Ranking Top 10</button>
+                <button onclick="switchTab('tickets')" class="nav-btn text-slate-300 hover:text-blue-300 transition" data-target="tickets">Meus Ingressos</button>
+            </nav>
+            <div class="flex items-center space-x-3">
+                <button onclick="openModal('cartModal')" class="relative bg-slate-800 hover:bg-slate-700 p-2.5 rounded-xl border border-slate-700 transition">
+                    <i class="fa-solid fa-ticket text-blue-400 text-lg"></i>
+                    <span id="cartCount" class="absolute -top-1.5 -right-1.5 bg-blue-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
+                </button>
+                <button onclick="switchTab('calendar')" class="hidden sm:inline-block bg-blue-600 hover:bg-blue-500 text-white px-5 py-2.5 rounded-xl font-semibold shadow-lg shadow-blue-600/20 transition">
+                    Comprar Ingressos
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main class="flex-grow">
+
+        <!-- HOME VIEW -->
+        <section id="view-home" class="view-section">
+            <!-- Hero Banner -->
+            <div class="hero-gradient py-20 lg:py-28 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+                <div class="absolute inset-0 opacity-10 bg-[radial-gradient(#38bdf8_1px,transparent_1px)] [background-size:16px_16px]"></div>
+                <div class="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                    <div>
+                        <span class="inline-block bg-blue-500/20 text-blue-400 border border-blue-500/30 px-3 py-1 rounded-full text-xs font-semibold mb-6 tracking-wide uppercase">Temporada Oficial ATP 2026</span>
+                        <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight mb-6 leading-tight">
+                            A Emoção do Tênis Mundial ao seu Alcance
+                        </h1>
+                        <p class="text-slate-300 text-lg mb-8 leading-relaxed">
+                            Acompanhe o calendário completo dos torneios Masters 1000, Grand Slams e ATP 500. Garanta seus ingressos antecipados para os maiores confrontos do esporte.
+                        </p>
+                        <div class="flex flex-wrap gap-4">
+                            <button onclick="switchTab('calendar')" class="bg-blue-600 hover:bg-blue-500 text-white font-bold px-8 py-4 rounded-xl shadow-xl shadow-blue-600/30 transition flex items-center gap-2">
+                                <i class="fa-solid fa-calendar-days"></i> Ver Calendário 2026
+                            </button>
+                            <button onclick="switchTab('rankings')" class="bg-slate-800 hover:bg-slate-700 text-slate-200 font-bold px-8 py-4 rounded-xl border border-slate-700 transition">
+                                <i class="fa-solid fa-ranking-star"></i> Ver Ranking Top 10
+                            </button>
+                        </div>
+                    </div>
+                    <div class="bg-slate-900/80 border border-slate-800 p-6 rounded-3xl backdrop-blur-md shadow-2xl">
+                        <div class="flex items-center justify-between mb-6 pb-4 border-b border-slate-800">
+                            <h3 class="font-bold text-lg flex items-center gap-2 text-blue-400">
+                                <i class="fa-solid fa-fire"></i> Próximo Grande Torneio
+                            </h3>
+                            <span class="bg-emerald-500/20 text-emerald-400 text-xs px-2.5 py-1 rounded-full font-semibold">Em Breve</span>
+                        </div>
+                        <div class="space-y-4">
+                            <div class="flex justify-between items-start">
+                                <div>
+                                    <span class="text-xs text-slate-400 uppercase tracking-widest block mb-1">Masters 1000</span>
+                                    <h4 class="text-2xl font-black text-white">Mutua Madrid Open</h4>
+                                    <p class="text-sm text-slate-400 mt-1"><i class="fa-solid fa-location-dot text-blue-500 mr-1"></i> Madrid, Espanha • Saibro</p>
+                                </div>
+                                <div class="text-right">
+                                    <span class="text-xs text-slate-400 block">Premiação</span>
+                                    <span class="text-lg font-bold text-emerald-400">€ 8.7M</span>
+                                </div>
+                            </div>
+                            <div class="bg-slate-950 p-4 rounded-2xl border border-slate-800 flex justify-between items-center">
+                                <div>
+                                    <span class="text-xs text-slate-400 block">Data de Realização</span>
+                                    <span class="font-semibold text-white">26 Abr - 09 Mai, 2026</span>
+                                </div>
+                                <button onclick="openTournamentDetail(0)" class="bg-blue-600 hover:bg-blue-500 text-white text-sm font-semibold px-4 py-2 rounded-xl transition">
+                                    Ver Detalhes & Ingressos
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Highlights / Features Grid -->
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <h2 class="text-3xl font-extrabold tracking-tight mb-4">Tudo sobre o Circuito ATP</h2>
+                    <p class="text-slate-400">Informações atualizadas, categorias de torneios, experiências VIP e ingressos oficiais.</p>
+                </div>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                    <div class="bg-slate-900 border border-slate-800 p-8 rounded-3xl">
+                        <div class="w-12 h-12 bg-blue-600/20 text-blue-400 rounded-2xl flex items-center justify-center text-xl mb-6">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-white">Ingressos 100% Oficiais</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">Compre com segurança ingressos garantidos para quadras centrais, camarotes VIP e setores gerais de todas as etapas.</p>
+                    </div>
+                    <div class="bg-slate-900 border border-slate-800 p-8 rounded-3xl">
+                        <div class="w-12 h-12 bg-emerald-600/20 text-emerald-400 rounded-2xl flex items-center justify-center text-xl mb-6">
+                            <i class="fa-solid fa-chart-line"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-white">Programação e Chaves</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">Fique por dentro das chaves de simples e duplas, horários de partidas, ordem de jogos e estatísticas detalhadas.</p>
+                    </div>
+                    <div class="bg-slate-900 border border-slate-800 p-8 rounded-3xl">
+                        <div class="w-12 h-12 bg-amber-600/20 text-amber-400 rounded-2xl flex items-center justify-center text-xl mb-6">
+                            <i class="fa-solid fa-globe"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-3 text-white">Cobertura Global</h3>
+                        <p class="text-slate-400 text-sm leading-relaxed">Dos pisos rápidos de piso duro aos tradicionais torneios de grama na Europa e saibro na América Latina.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CALENDAR VIEW -->
+        <section id="view-calendar" class="view-section hidden py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8 pb-6 border-b border-slate-800">
+                <div>
+                    <h2 class="text-3xl font-extrabold tracking-tight">Calendário ATP 2026</h2>
+                    <p class="text-slate-400 text-sm mt-1">Selecione uma categoria ou busque pelo torneio desejado.</p>
+                </div>
+                <div class="flex flex-wrap items-center gap-3">
+                    <select id="categoryFilter" onchange="filterTournaments()" class="bg-slate-900 border border-slate-700 text-slate-200 text-sm rounded-xl px-4 py-2.5 focus:outline-none focus:border-blue-500">
+                        <option value="all">Todas as Categorias</option>
+                        <option value="Grand Slam">Grand Slam</option>
+                        <option value="Masters 1000">ATP Masters 1000</option>
+                        <option value="ATP 500">ATP 500</option>
+                        <option value="ATP 250">ATP 250</option>
+                    </select>
+                    <div class="relative">
+                        <input type="text" id="searchInput" oninput="filterTournaments()" placeholder="Buscar torneio ou cidade..." class="bg-slate-900 border border-slate-700 text-slate-200 text-sm rounded-xl pl-10 pr-4 py-2.5 focus:outline-none focus:border-blue-500 w-full sm:w-64">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-3.5 text-slate-500 text-sm"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Tournament Cards Grid -->
+            <div id="tournamentGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <!-- Dynamic tournament cards injected via JS -->
+            </div>
+        </section>
+
+        <!-- RANKINGS VIEW -->
+        <section id="view-rankings" class="view-section hidden py-12 px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto">
+            <div class="text-center mb-10">
+                <span class="text-xs uppercase tracking-widest text-blue-400 font-semibold block mb-2">Race to Turin</span>
+                <h2 class="text-3xl font-extrabold tracking-tight">Ranking Oficial ATP - Top 10</h2>
+                <p class="text-slate-400 text-sm mt-1">Atualizado semanalmente com os melhores tenistas do mundo.</p>
+            </div>
+            <div class="bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden shadow-2xl">
+                <div class="overflow-x-auto">
+                    <table class="w-full text-left border-collapse">
+                        <thead>
+                            <tr class="bg-slate-950 border-b border-slate-800 text-slate-400 text-xs uppercase tracking-wider">
+                                <th class="p-4 sm:p-5 font-semibold">Pos</th>
+                                <th class="p-4 sm:p-5 font-semibold">Atleta</th>
+                                <th class="p-4 sm:p-5 font-semibold">País</th>
+                                <th class="p-4 sm:p-5 font-semibold text-right">Pontos</th>
+                            </tr>
+                        </thead>
+                        <tbody id="rankingsTableBody" class="divide-y divide-slate-800/60 text-sm">
+                            <!-- Injected by JS -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- TICKETS VIEW -->
+        <section id="view-tickets" class="view-section hidden py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto">
+            <div class="text-center mb-10">
+                <h2 class="text-3xl font-extrabold tracking-tight">Seus Ingressos e Carrinho</h2>
+                <p class="text-slate-400 text-sm mt-1">Gerencie suas compras e visualize seus e-tickets confirmados.</p>
+            </div>
+            <div id="cartContentContainer" class="bg-slate-900 border border-slate-800 rounded-3xl p-6 sm:p-8">
+                <!-- Cart items or empty state -->
+            </div>
+        </section>
+
+    </main>
+
+    <!-- TOURNAMENT DETAIL MODAL -->
+    <div id="tournamentModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 relative">
+            <button onclick="closeModal('tournamentModal')" class="absolute top-6 right-6 text-slate-400 hover:text-white bg-slate-800 w-10 h-10 rounded-full flex items-center justify-center transition">
+                <i class="fa-solid fa-xmark text-lg"></i>
+            </button>
+            <div id="modalDetailsContent">
+                <!-- Injected via JS -->
+            </div>
+        </div>
+    </div>
+
+    <!-- CHECKOUT SUCCESS MODAL -->
+    <div id="successModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden items-center justify-center p-4">
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-md w-full p-8 text-center relative">
+            <div class="w-16 h-16 bg-emerald-500/20 text-emerald-400 rounded-full flex items-center justify-center text-3xl mx-auto mb-6">
+                <i class="fa-solid fa-check"></i>
+            </div>
+            <h3 class="text-2xl font-bold mb-2">Compra Realizada!</h3>
+            <p class="text-slate-400 text-sm mb-6">Seus ingressos foram emitidos com sucesso. Um e-mail de confirmação com o QR Code foi enviado para você.</p>
+            <button onclick="closeModal('successModal'); switchTab('tickets')" class="w-full bg-blue-600 hover:bg-blue-500 text-white font-bold py-3 rounded-xl transition">
+                Ver Meus Ingressos
+            </button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-slate-900 border-t border-slate-800 py-12 mt-16 text-slate-400 text-sm">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-4 gap-8 mb-8">
+            <div>
+                <div class="flex items-center space-x-3 mb-4">
+                    <div class="bg-blue-600 text-white p-2 rounded-lg font-bold text-base">
+                        <i class="fa-solid fa-trophy"></i> ATP
+                    </div>
+                    <span class="text-white font-bold text-base">ATP TOUR 2026</span>
+                </div>
+                <p class="text-xs text-slate-500 leading-relaxed">O portal oficial do circuito profissional de tênis masculino. Calendário, placares, rankings e ingressos.</p>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-3 text-xs uppercase tracking-wider">Torneios Principais</h4>
+                <ul class="space-y-2 text-xs">
+                    <li><a href="#" onclick="switchTab('calendar')" class="hover:text-blue-400 transition">Grand Slams</a></li>
+                    <li><a href="#" onclick="switchTab('calendar')" class="hover:text-blue-400 transition">ATP Masters 1000</a></li>
+                    <li><a href="#" onclick="switchTab('calendar')" class="hover:text-blue-400 transition">ATP Finals Turim</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-3 text-xs uppercase tracking-wider">Atalhos</h4>
+                <ul class="space-y-2 text-xs">
+                    <li><a href="#" onclick="switchTab('rankings')" class="hover:text-blue-400 transition">Ranking Atualizado</a></li>
+                    <li><a href="#" onclick="switchTab('tickets')" class="hover:text-blue-400 transition">Meus Ingressos</a></li>
+                    <li><a href="#" onclick="switchTab('calendar')" class="hover:text-blue-400 transition">Comprar Ingressos</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-white font-semibold mb-3 text-xs uppercase tracking-wider">Boletim Informativo</h4>
+                <p class="text-xs text-slate-500 mb-3">Receba novidades sobre abertura de bilheteria e chaveamento.</p>
+                <div class="flex gap-2">
+                    <input type="email" placeholder="Seu e-mail" class="bg-slate-950 border border-slate-800 text-xs rounded-xl px-3 py-2 text-slate-200 focus:outline-none focus:border-blue-500 flex-grow">
+                    <button onclick="subscribeNewsletter()" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-xl text-xs font-semibold transition">Assinar</button>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-8 border-t border-slate-800/80 text-center text-xs text-slate-600">
+            &copy; 2026 ATP Tour, Inc. Todos os direitos reservados. Projeto demonstrativo oficial de tênis.
+        </div>
+    </footer>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        const tournaments = [
+            {
+                id: 1,
+                name: "Mutua Madrid Open",
+                category: "Masters 1000",
+                city: "Madrid, Espanha",
+                surface: "Saibro",
+                date: "26 Abr - 09 Mai, 2026",
+                prize: "€ 8,700,000",
+                description: "Um dos torneios mais vibrantes da temporada europeia de saibro, disputado na Caja Mágica com altitude e grande público.",
+                prices: { general: 150, courtSide: 380, vip: 850 },
+                image: "https://placehold.co/600x400/0f172a/38bdf8?text=Madrid+Open"
+            },
+            {
+                id: 2,
+                name: "Internazionali BNL d'Italia",
+                category: "Masters 1000",
+                city: "Roma, Itália",
+                surface: "Saibro",
+                date: "10 Mai - 21 Mai, 2026",
+                prize: "€ 8,500,000",
+                description: "Disputado no tradicional Foro Italico às margens do Rio Tibre, Roma é palco de grandes batalhas históricas no saibro.",
+                prices: { general: 160, courtSide: 400, vip: 900 },
+                image: "https://placehold.co/600x400/0f172a/38bdf8?text=Roma+Masters"
+            },
+            {
+                id: 3,
+                name: "Roland Garros",
+                category: "Grand Slam",
+                city: "Paris, França",
+                surface: "Saibro",
+                date: "24 Mai - 07 Jun, 2026",
+                prize: "€ 53,500,000",
+                description: "O único Grand Slam disputado no saibro. A lendária terra batida de Paris coroa os reis da resistência e técnica.",
+                prices: { general: 220, courtSide: 600, vip: 1400 },
+                image: "https://placehold.co/600x400/0f172a/38bdf8?text=Roland+Garros"
+            },
+            {
+                id: 4,
+                name: "Cinch Championships (Queen's)",
+                category: "ATP 500",
+                city: "Londres, Reino Unido",
+                surface: "Grama",
+                date: "15 Jun - 21 Jun, 2026",
+                prize: "€ 2,400,000",
+                description: "Tradicional aquecimento em grama no Queen's Club em Londres, reunindo os melhores sacadores e especialistas na superfície verde.",
+                prices: { general: 120, courtSide: 300, vip: 700 },
+                image: "https://placehold.co/600x400/0f172a/38bdf8?text=Queens+Club"
+            },
+            {
+                id: 5,
+                name: "Wimbledon",
+                category: "Grand Slam",
+                city: "Londres, Reino Unido",
+                surface: "Grama",
+                date: "29 Jun - 12 Jul, 2026",
+                prize: "£ 50,000,000",
+                description: "O torneio mais antigo e prestigiado do mundo do tênis. Tradição, elegância, morangos com creme e grama sagrada.",
+                prices: { general: 250, courtSide: 750, vip: 1800 },
+                image: "https://placehold.co/600x400/0f172a/38bdf8?text=Wimbledon"
+            },
+            {
+                id: 6,
+                name: "National Bank Open",
+                category: "Masters 1000",
+                city: "Toronto, Canadá",
+                surface: "Duro",
+                date: "03 Ago - 14 Ago, 2026",
+                prize: "$ 7,600,000",
+                description: "Abertura da super 'US Open Series' em quadras duras na América do Norte, com atletas de elite buscando ritmo.",
+                prices: { general: 130, courtSide: 320, vip: 750 },
+                image: "https://placehold.co/600x400/0f172a/38bdf8?text=Toronto+Masters"
+            },
+            {
+                id: 7,
+                name: "US Open",
+                category: "Grand Slam",
+                city: "Nova York, EUA",
+                surface: "Duro",
+                date: "31 Ago - 13 Set, 2026",
+                prize: "$ 65,000,000",
+                description: "O último Grand Slam do ano sob as luzes vibrantes de Flushing Meadows em Nova York, com atmosfera incomparável.",
+                prices: { general: 200, courtSide: 550, vip: 1300 },
+                image: "https://placehold.co/600x400/0f172a/38bdf8?text=US+Open"
+            },
+            {
+                id: 8,
+                name: "Rolex Shanghai Masters",
+                category: "Masters 1000",
+                city: "Xangai, China",
+                surface: "Duro",
+                date: "05 Out - 18 Out, 2026",
+                prize: "$ 10,000,000",
+                description: "O principal torneio da gira asiática, com instalações ultramodernas e premiação recorde.",
+                prices: { general: 140, courtSide: 350, vip: 800 },
+                image: "https://placehold.co/600x400/0f172a/38bdf8?text=Shanghai+Masters"
+            },
+            {
+                id: 9,
+                name: "Nitto ATP Finals",
+                category: "ATP Finals",
+                city: "Turim, Itália",
+                surface: "Duro (Indoor)",
+                date: "15 Nov - 22 Nov, 2026",
+                prize: "$ 15,000,000",
+                description: "O grand finale da temporada reunindo apenas os 8 melhores tenistas de simples e as 8 melhores duplas do ano.",
+                prices: { general: 230, courtSide: 650, vip: 1500 },
+                image: "https://placehold.co/600x400/0f172a/38bdf8?text=ATP+Finals+Turin"
+            }
+        ];
+
+        const rankings = [
+            { pos: 1, name: "Novak Djokovic", country: "Sérvia", points: 9850, flag: "🇷🇸" },
+            { pos: 2, name: "Carlos Alcaraz", country: "Espanha", points: 8900, flag: "🇪🇸" },
+            { pos: 3, name: "Jannik Sinner", country: "Itália", points: 8450, flag: "🇮🇹" },
+            { pos: 4, name: "Daniil Medvedev", country: "Rússia", points: 6720, flag: "🇷🇺" },
+            { pos: 5, name: "Alexander Zverev", country: "Alemanha", points: 6350, flag: "🇩🇪" },
+            { pos: 6, name: "Andrey Rublev", country: "Rússia", points: 4710, flag: "🇷🇺" },
+            { pos: 7, name: "Casper Ruud", country: "Noruega", points: 4020, flag: "🇳🇴" },
+            { pos: 8, name: "Hubert Hurkacz", country: "Polônia", points: 3880, flag: "🇵🇱" },
+            { pos: 9, name: "Alex de Minaur", country: "Austrália", points: 3570, flag: "🇦🇺" },
+            { pos: 10, name: "Stefanos Tsitsipas", country: "Grécia", points: 3450, flag: "🇬🇷" }
+        ];
+
+        let cart = [];
+
+        function switchTab(tabId) {
+            document.querySelectorAll('.view-section').forEach(el => el.classList.add('hidden'));
+            document.getElementById('view-' + tabId).classList.remove('hidden');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Update nav styles
+            document.querySelectorAll('.nav-btn').forEach(btn => {
+                if(btn.dataset.target === tabId) {
+                    btn.classList.add('text-blue-400');
+                    btn.classList.remove('text-slate-300');
+                } else {
+                    btn.classList.remove('text-blue-400');
+                    btn.classList.add('text-slate-300');
+                }
+            });
+
+            if (tabId === 'tickets') {
+                renderCart();
+            }
+        }
+
+        function renderTournaments(data) {
+            const grid = document.getElementById('tournamentGrid');
+            grid.innerHTML = '';
+
+            if (data.length === 0) {
+                grid.innerHTML = `<div class="col-span-full text-center py-12 text-slate-500">Nenhum torneio encontrado com os filtros selecionados.</div>`;
+                return;
+            }
+
+            data.forEach((t, index) => {
+                const originalIndex = tournaments.findIndex(item => item.id === t.id);
+                let badgeColor = 'bg-blue-500/20 text-blue-400 border-blue-500/30';
+                if (t.category === 'Grand Slam') badgeColor = 'bg-amber-500/20 text-amber-400 border-amber-500/30';
+                if (t.category === 'ATP 500') badgeColor = 'bg-emerald-500/20 text-emerald-400 border-emerald-500/30';
+
+                const card = document.createElement('div');
+                card.className = 'tournament-card bg-slate-900 border border-slate-800 rounded-3xl overflow-hidden flex flex-col justify-between shadow-lg';
+                card.innerHTML = `
+                    <div>
+                        <div class="h-48 overflow-hidden relative bg-slate-950">
+                            <img src="${t.image}" alt="${t.name}" class="w-full h-full object-cover opacity-80" onerror="this.src='https://placehold.co/600x400/0f172a/38bdf8?text=ATP+Tour'">
+                            <div class="absolute top-4 left-4">
+                                <span class="${badgeColor} border px-3 py-1 rounded-full text-xs font-semibold backdrop-blur-md">${t.category}</span>
+                            </div>
+                            <div class="absolute bottom-4 right-4 bg-slate-950/80 backdrop-blur-md px-3 py-1 rounded-xl text-xs font-medium text-slate-300">
+                                <i class="fa-solid fa-earth-americas text-blue-400 mr-1"></i> ${t.surface}
+                            </div>
+                        </div>
+                        <div class="p-6">
+                            <span class="text-xs text-slate-400 block mb-1"><i class="fa-solid fa-location-dot text-blue-500 mr-1"></i> ${t.city}</span>
+                            <h3 class="text-xl font-bold text-white mb-2">${t.name}</h3>
+                            <p class="text-slate-400 text-xs mb-4 line-clamp-2">${t.description}</p>
+                            <div class="flex items-center justify-between text-xs text-slate-300 pt-3 border-t border-slate-800">
+                                <span><i class="fa-regular fa-calendar text-blue-400 mr-1"></i> ${t.date}</span>
+                                <span class="text-emerald-400 font-semibold">${t.prize}</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6 pt-0">
+                        <button onclick="openTournamentDetail(${originalIndex})" class="w-full bg-slate-800 hover:bg-blue-600 text-slate-200 hover:text-white font-semibold py-3 rounded-xl transition flex items-center justify-center gap-2 text-sm">
+                            <i class="fa-solid fa-ticket"></i> Ver Ingressos & Detalhes
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function filterTournaments() {
+            const category = document.getElementById('categoryFilter').value;
+            const search = document.getElementById('searchInput').value.toLowerCase();
+
+            const filtered = tournaments.filter(t => {
+                const matchCat = category === 'all' || t.category === category;
+                const matchSearch = t.name.toLowerCase().includes(search) || t.city.toLowerCase().includes(search) || t.surface.toLowerCase().includes(search);
+                return matchCat && matchSearch;
+            });
+
+            renderTournaments(filtered);
+        }
+
+        function openTournamentDetail(index) {
+            const t = tournaments[index];
+            const content = document.getElementById('modalDetailsContent');
+            content.innerHTML = `
+                <div class="flex items-center justify-between mb-4">
+                    <span class="bg-blue-500/20 text-blue-400 border border-blue-500/30 px-3 py-1 rounded-full text-xs font-semibold">${t.category}</span>
+                    <span class="text-xs text-slate-400"><i class="fa-solid fa-earth-americas text-blue-400 mr-1"></i> ${t.surface}</span>
+                </div>
+                <h2 class="text-2xl sm:text-3xl font-bold mb-2 text-white">${t.name}</h2>
+                <p class="text-sm text-slate-400 mb-6"><i class="fa-solid fa-location-dot text-blue-500 mr-1"></i> ${t.city} • <i class="fa-regular fa-calendar text-blue-400 ml-2 mr-1"></i> ${t.date}</p>
+                <p class="text-slate-300 text-sm mb-6 leading-relaxed bg-slate-950 p-4 rounded-2xl border border-slate-800">${t.description}</p>
+                
+                <h4 class="font-bold text-white mb-4 text-sm uppercase tracking-wider">Selecionar Ingressos</h4>
+                <div class="space-y-3 mb-6">
+                    <div class="flex items-center justify-between bg-slate-950 p-4 rounded-2xl border border-slate-800">
+                        <div>
+                            <span class="font-semibold block text-sm">Setor Geral / Arquibancada</span>
+                            <span class="text-xs text-slate-400">Visão panorâmica da quadra</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="font-bold text-emerald-400">$${t.prices.general}</span>
+                            <button onclick="addToCart(${t.id}, 'Setor Geral', ${t.prices.general})" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2 rounded-xl transition">Adicionar</button>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between bg-slate-950 p-4 rounded-2xl border border-slate-800">
+                        <div>
+                            <span class="font-semibold block text-sm">Quadra Lateral (Court Side)</span>
+                            <span class="text-xs text-slate-400">Próximo aos atletas, excelente visão</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="font-bold text-emerald-400">$${t.prices.courtSide}</span>
+                            <button onclick="addToCart(${t.id}, 'Court Side', ${t.prices.courtSide})" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2 rounded-xl transition">Adicionar</button>
+                        </div>
+                    </div>
+                    <div class="flex items-center justify-between bg-slate-950 p-4 rounded-2xl border border-slate-800">
+                        <div>
+                            <span class="font-semibold block text-sm">Camarote VIP / Hospitalidade</span>
+                            <span class="text-xs text-slate-400">Buffet incluso, assento premium e brinde</span>
+                        </div>
+                        <div class="flex items-center gap-4">
+                            <span class="font-bold text-emerald-400">$${t.prices.vip}</span>
+                            <button onclick="addToCart(${t.id}, 'Camarote VIP', ${t.prices.vip})" class="bg-blue-600 hover:bg-blue-500 text-white text-xs font-semibold px-4 py-2 rounded-xl transition">Adicionar</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex justify-end">
+                    <button onclick="closeModal('tournamentModal'); switchTab('tickets')" class="bg-slate-800 hover:bg-slate-700 text-white text-sm font-semibold px-6 py-3 rounded-xl transition">
+                        Ir para o Carrinho (<span id="modalCartCount">${cart.length}</span>)
+                    </button>
+                </div>
+            `;
+            document.getElementById('tournamentModal').classList.remove('hidden');
+            document.getElementById('tournamentModal').classList.add('flex');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.remove('flex');
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        function openModal(modalId) {
+            if(modalId === 'cartModal') {
+                switchTab('tickets');
+                return;
+            }
+            document.getElementById(modalId).classList.remove('hidden');
+            document.getElementById(modalId).classList.add('flex');
+        }
+
+        function addToCart(tournamentId, sectorName, price) {
+            const tournament = tournaments.find(t => t.id === tournamentId);
+            cart.push({
+                cartId: Date.now() + Math.random(),
+                tournamentName: tournament.name,
+                city: tournament.city,
+                date: tournament.date,
+                sector: sectorName,
+                price: price
+            });
+            updateCartBadge();
+            
+            // Visual feedback inside modal
+            const countSpan = document.getElementById('modalCartCount');
+            if(countSpan) countSpan.innerText = cart.length;
+
+            // Small notification popup or toast could go here
+        }
+
+        function removeFromCart(cartId) {
+            cart = cart.filter(item => item.cartId !== cartId);
+            updateCartBadge();
+            renderCart();
+        }
+
+        function updateCartBadge() {
+            document.getElementById('cartCount').innerText = cart.length;
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cartContentContainer');
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-12">
+                        <div class="w-16 h-16 bg-slate-800 text-slate-500 rounded-full flex items-center justify-center text-2xl mx-auto mb-4">
+                            <i class="fa-solid fa-ticket"></i>
+                        </div>
+                        <h3 class="text-xl font-bold mb-2">Seu carrinho está vazio</h3>
+                        <p class="text-slate-400 text-sm mb-6">Explore o calendário e selecione ingressos para os torneios do circuito ATP.</p>
+                        <button onclick="switchTab('calendar')" class="bg-blue-600 hover:bg-blue-500 text-white font-semibold px-6 py-3 rounded-xl transition">
+                            Ver Calendário 2026
+                        </button>
+                    </div>
+                `;
+                return;
+            }
+
+            let total = 0;
+            let html = `<h3 class="text-xl font-bold mb-6 pb-4 border-b border-slate-800">Ingressos Selecionados (${cart.length})</h3><div class="space-y-4 mb-8">`;
+            
+            cart.forEach(item => {
+                total += item.price;
+                html += `
+                    <div class="bg-slate-950 p-4 sm:p-5 rounded-2xl border border-slate-800 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+                        <div>
+                            <span class="text-xs text-blue-400 font-semibold block mb-1">${item.sector}</span>
+                            <h4 class="font-bold text-white text-lg">${item.tournamentName}</h4>
+                            <p class="text-xs text-slate-400"><i class="fa-solid fa-location-dot text-slate-500 mr-1"></i> ${item.city} • ${item.date}</p>
+                        </div>
+                        <div class="flex items-center justify-between w-full sm:w-auto gap-6">
+                            <span class="font-bold text-lg text-emerald-400">$${item.price}</span>
+                            <button onclick="removeFromCart(${item.cartId})" class="text-slate-500 hover:text-red-400 transition p-2">
+                                <i class="fa-solid fa-trash-can"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            html += `
+                </div>
+                <div class="bg-slate-950 p-6 rounded-2xl border border-slate-800 flex flex-col sm:flex-row justify-between items-center gap-4">
+                    <div>
+                        <span class="text-xs text-slate-400 block">Total do Pedido</span>
+                        <span class="text-3xl font-extrabold text-white">$${total} USD</span>
+                    </div>
+                    <button onclick="checkout()" class="w-full sm:w-auto bg-emerald-600 hover:bg-emerald-500 text-white font-bold px-8 py-4 rounded-xl shadow-lg shadow-emerald-600/20 transition flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-lock"></i> Finalizar Compra Segura
+                    </button>
+                </div>
+            `;
+            container.innerHTML = html;
+        }
+
+        function checkout() {
+            if(cart.length === 0) return;
+            cart = [];
+            updateCartBadge();
+            openModal('successModal');
+        }
+
+        function renderRankings() {
+            const tbody = document.getElementById('rankingsTableBody');
+            tbody.innerHTML = '';
+            rankings.forEach(r => {
+                const row = document.createElement('tr');
+                row.className = 'hover:bg-slate-800/40 transition';
+                row.innerHTML = `
+                    <td class="p-4 sm:p-5 font-bold text-blue-400">#${r.pos}</td>
+                    <td class="p-4 sm:p-5 font-semibold text-white flex items-center gap-3">
+                        <div class="w-8 h-8 rounded-full bg-slate-800 flex items-center justify-center font-bold text-xs text-slate-300">
+                            ${r.name.split(' ').map(n => n[0]).join('')}
+                        </div>
+                        ${r.name}
+                    </td>
+                    <td class="p-4 sm:p-5 text-slate-300"><span class="mr-2">${r.flag}</span>${r.country}</td>
+                    <td class="p-4 sm:p-5 text-right font-bold text-emerald-400">${r.points.toLocaleString()} pts</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        function subscribeNewsletter() {
+            alert("Obrigado por assinar! Você receberá as novidades do ATP Tour.");
+        }
+
+        // Initialize application on window load
+        window.onload = function() {
+            renderTournaments(tournaments);
+            renderRankings();
+        };
+    </script>
+</body>
+</html>
